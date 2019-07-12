@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="principal.xhtml">
+
+        <ui:define name="metadata">
+            <f:metadata>
+                <f:event listener="#{alunoBean.carregar}" type="preRenderView"/>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="content">
+            <h4> <i> Perfil </i> <hr/> </h4>
+
+            <h:form id="frmPerfil">
+
+                <p:growl id="growl" showDetail="true" />
+                <center>
+                    <p:panelGrid id="pnlCadUsuario" columns="2"  style="font-size: 15px" columnClasses="colunaEsquerda,colunaDireita" >
+
+                        <h:outputText value="CPF:" />
+                        <p:outputLabel value="#{atenticacaoBean.usuarioLogado.cpf}" id="txtCPF" />
+
+                        <h:outputText value="Nome:" style="text-align: right" />
+                        <p:outputLabel id="txtNome" value="#{atenticacaoBean.usuarioLogado.nome}"/>
+
+                        <h:outputText value="Email:" />
+                        <p:outputLabel id="txtEmail" value="#{atenticacaoBean.usuarioLogado.email}"/>
+
+                        <h:outputText value="Usuário Nível" />
+                        <p:outputLabel value="#{atenticacaoBean.usuarioLogado.nivelUsuario}"/>
+
+                        <h:outputText value="Curso" rendered="#{atenticacaoBean.usuarioLogado.nivelUsuario == 'Aluno'}"/>
+                        <p:outputLabel value="#{alunoBean.buscarCurso(atenticacaoBean.usuarioLogado.matricula)}" rendered="#{atenticacaoBean.usuarioLogado.nivelUsuario == 'Aluno'}"/>
+
+                                                <h:outputText value="Curso" rendered="#{atenticacaoBean.usuarioLogado.nivelUsuario == 'Aluno'}"/>
+                        <p:outputLabel value="#{alunoBean.buscarCurso(atenticacaoBean.usuarioLogado.matricula)}" rendered="#{atenticacaoBean.usuarioLogado.nivelUsuario == 'Aluno'}"/>
+
+                        
+                    </p:panelGrid>
+
+                    <br/>
+                    <h:panelGrid columns="2">
+
+                        <p:commandButton value="Editar"
+                                         id="btnEditar" update="frmPerfil"
+                                         icon="ui-icon-pencil" oncomplete="PF('alunoDialogEditar').show()" />
+
+                        <p:commandButton value="Mudar senha" oncomplete="PF('tccDialogSelect').show()"/>
+
+                    </h:panelGrid>
+                </center>
+                
+                 <!-- DIALOG PARA EDIÇÃO ================================= -->
+                <p:dialog header="Alterações em Perfil" widgetVar="alunoDialogEditar" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                    <p:outputPanel id="alunoDetailEditar" style="text-align:center;"> 
+                       
+                        <p:panelGrid id="pnlPerfil" columns="2"  style="font-size: 15px" columnClasses="colunaEsquerda,colunaDireita" >
+
+                        <h:outputText value="CPF:" />
+                        <p:outputLabel value="#{atenticacaoBean.usuarioLogado.cpf}" />
+
+                        <h:outputText value="Nome:" style="text-align: right" />
+                        <p:outputLabel  value="#{atenticacaoBean.usuarioLogado.nome}"/>
+
+                        <h:outputText value="Email:" />
+                        <p:inputText value="#{alunoBean.selectAluno.email}"/>
+                        
+                        <h:outputText value="Usuário Nível" />
+                        <p:inputText value="#{alunoBean.selectAluno.nivelUsuario}"/>
+
+                        <h:outputText value="Curso" rendered="#{atenticacaoBean.usuarioLogado.nivelUsuario == 'Aluno'}"/>
+                        <p:inputText value="#{alunoBean.selectAluno.curso}" rendered="#{atenticacaoBean.usuarioLogado.nivelUsuario == 'Aluno'}"/>
+
+
+                    </p:panelGrid>
+                        
+                    </p:outputPanel>
+                </p:dialog>
+
+                
+            </h:form>
+
+        </ui:define>
+    </ui:composition>
+
+</html>
+

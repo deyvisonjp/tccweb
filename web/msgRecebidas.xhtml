@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="principal.xhtml">
+
+        <ui:define name="metadata">
+            <f:metadata>
+                <f:event listener="#{mensagemBean.carregar}" type="preRenderView" />
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="content">
+
+            <h4> <i> Mensagens Recebidas </i> <hr/> </h4>
+
+            <h:form id="form">
+                <p:growl id="msgs" showDetail="true" />
+
+                <p:dataTable var="msgs" id="tblMensagens"
+                             paginator="true"
+                             emptyMessage="Não há dados para serem mostrados"
+                             value="#{mensagemBean.listaMensagem}" selection="#{mensagemBean.selectMensagem}"
+                             filteredValue="#{mensagemBean.listaMensagemFiltro}"
+                             rows="10"
+                             rowKey="#{msgs.id_mensagem}"
+                             rowsPerPageTemplate="10,20,30">
+
+                    <p:column headerText="Enviado por" sortBy="#{msgs.usuario_remetente}" width="35%" >
+                        <h:outputText value="#{msgs.usuario_remetente.email} - #{msgs.usuario_remetente.nivelUsuario}" rendered="#{msgs.destinatario.matricula == atenticacaoBean.usuarioLogado.matricula}"/>
+                    </p:column>
+
+                    <p:column headerText="Assunto" width="25%">
+                        <h:outputText value="#{msgs.assunto}" rendered="#{msgs.destinatario.matricula == atenticacaoBean.usuarioLogado.matricula}"/>
+                    </p:column>
+
+                    <p:column headerText="Data" width="10%">
+                        <h:outputText value="#{msgs.data}" rendered="#{msgs.destinatario.matricula == atenticacaoBean.usuarioLogado.matricula}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column style="width:32px;text-align: center" width="5%">
+                        <p:commandButton process="tblMensagens" update=":form:msgVisualizar" oncomplete="PF('msgDialog').show()" icon="ui-icon-search" 
+                                         rendered="#{msgs.destinatario.matricula == atenticacaoBean.usuarioLogado.matricula}" title="Visualizar">
+                            <f:setPropertyActionListener value="#{msgs}" target="#{mensagemBean.selectMensagem}" />
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
+
+
+                <!-- DIALOG PARA VISUALIZAÇÃO ================================= -->
+                <p:dialog header="Mensagens" widgetVar="msgDialog" modal="true" width="60%" showEffect="fade" hideEffect="fade" responsive="true" onHide="true"  resizable="true">
+                    <p:outputPanel id="msgVisualizar" style="text-align:center;"> 
+                        <center>
+                            <p:panelGrid columns="1">
+
+                                <p:outputLabel value="Recebida em: #{mensagemBean.selectMensagem.data}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" locale="pt"/>
+                                </p:outputLabel>
+                                               
+                                               
+                                <h:outputText  value="Mensagem:"/>
+                                <h:outputText value="#{mensagemBean.selectMensagem.texto_mensagem}"/>
+
+                            </p:panelGrid>
+                        </center>
+
+                        <hr/>
+                        <p:commandButton value="Responder"  action="msg.xhtml?faces-redirect = true"/>
+
+                    </p:outputPanel>
+                </p:dialog>
+
+            </h:form>
+
+        </ui:define>    
+
+    </ui:composition>
+
+</html>
+

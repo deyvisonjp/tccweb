@@ -1,0 +1,38 @@
+@charset "UTF-8";
+
+.header {
+width: 950px;
+height: 140px;
+background-color: white;
+margin-left: auto;
+margin-right: auto;
+padding: 20px;
+}
+
+.retangulo{
+width: 10px;
+background-color: green;
+margin-left: auto;
+margin-right: auto;
+padding: 8px;
+}
+
+.corpo {
+width: 950px;
+background-color: white;
+margin-left: auto;
+margin-right: auto;
+padding: 20px;
+}
+
+img {
+height: 140px;
+width: 250px;
+border: 20px;
+}
+
+font {
+size: 4px;
+font-family: verdana;
+text-align: justify;
+}

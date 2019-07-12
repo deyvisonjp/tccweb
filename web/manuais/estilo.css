@@ -1,0 +1,34 @@
+@charset "UTF-8";
+
+.header {
+width: 950px;
+height: 100px;
+background-color: yellow;
+margin-left: auto;
+margin-right: auto;
+padding: 20px;
+}
+
+.retangulo{
+width: 960px;
+height: 10px;
+background-color: black;
+margin-left: auto;
+margin-right: auto;
+}
+
+.corpo {
+width: 950px;
+background-color: white;
+margin-left: auto;
+margin-right: auto;
+padding: 20px;
+}
+
+img {
+height: 160%;
+width: 18%;
+padding: 20px;
+float: right;
+border: 20px;
+}

@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+
+.folha {
+width: 850px;
+height: 1024px;
+background-color: white;
+border: 2px solid;
+border-color: black;
+}
+
+img {
+height: 120px;
+width: 180px;
+border: 20px;
+float:left;
+padding-right: 15px;
+padding-left: 20px;
+}
+
+font {
+padding-left: 25px;
+size: 4px;
+font-family: verdana;
+text-align: left;
+}
+
+table {
+width: 800px;
+height: 100px; 
+border: 1px solid ;
+border-color: black;
+}

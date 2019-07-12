@@ -1,0 +1,205 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:insert name="metadata"/>
+
+    <h:head>
+        <title>Sistema TCC 1.0</title>
+        <link rel="stylesheet" type="text/css"  href="resources/css/style.css"/>
+        <h:outputStylesheet library="css" name="style_prime.css"/>
+        <h:outputScript library="js" name="locale-primefaces.js"/>
+        <h:outputScript library="js" name="basico.js"/>
+    </h:head>
+
+    <h:body>
+
+        <p:growl id="msgGlobal"/>
+
+        <div id="inteface">
+            <hr style="height: 8px; background-color: #0478c5;box-shadow: 0px 1px 1px; margin: 0px;"/>
+
+            <!--//CABEÇALHO =========================================================================================-->
+            <div id="cabecalho">
+                <ui:insert name="header">
+                    <img style="position:absolute; left:0px; padding: 20px" src="resources/img/logo_small.png"/>
+                </ui:insert>
+            </div>
+            <img class="icones_cab"  src="resources/img/icones_cab.png"/>
+
+            <hr style="height: 8px; background-color: #0478c5; box-shadow: 0px -1px 1px;"/>
+
+            <div>
+                <h:form>
+                    <h:panelGrid columns="6" style="margin-left:45px">
+                        <p:graphicImage width="80px" url="http://realtalent.com.br/hdbr/wp-content/uploads/2016/08/Perfil-Comportamental.png"/>
+                        <p:splitButton style="font-family: 'FonteLogo'; font-size: 15px" value="#{atenticacaoBean.usuarioLogado.nome} - #{atenticacaoBean.usuarioLogado.nivelUsuario}">    
+                            <p:menuitem value="Perfil" actionListener="#{buttonView.update}" url="perfil.xhtml" icon="ui-icon-arrowrefresh-1-w" />
+                            <p:menuitem value="Sair" action="#{atenticacaoBean.deslogar()}" ajax="false" icon="ui-icon-close" />
+                        </p:splitButton>
+                        
+                    </h:panelGrid>
+                    <center><h:outputText style="font-size: 25pt; font-family: 'FonteLogo'; color: red" value="Favor Logar no Sistema" rendered="#{atenticacaoBean.usuarioLogado.email == null}" /></center>
+                </h:form>
+            </div>
+
+            <hr style="height: 8px; background-color: #0478c5; box-shadow: 0px -1px 1px;"/>
+
+            <!--MENU LATERAL ======================================================================================-->
+            <div id="aside">
+                <ui:insert name="menu_lateral">
+                    <h:form rendered="#{atenticacaoBean.usuarioLogado.email != null}">
+                        <p:menu toggleable="true">
+
+                            <p:menuitem value="Página Inicial" url="principal.xhtml" icon="ui-icon-home"/>
+                            <p:submenu label="Cadastros" rendered="#{atenticacaoBean.usuarioLogado.nivelUsuario != 'Aluno' }">
+                                <p:menuitem value="Aluno" url="AlunoCad.xhtml" />
+                                <p:menuitem value="Orientador" url="OrientadorCad.xhtml" />
+                                <p:menuitem value="Coordenador" url="CoordenadorCad.xhtml" />
+                                <p:menuitem value="Avaliador" url="AvaliadorCad.xhtml" />
+                                <p:menuitem value="TCC" url="TccCad.xhtml"/>
+                                <p:menuitem value="Cronograma" url="editarCronograma.xhtml"/>
+                            </p:submenu>
+
+                            <p:submenu label="Etapas">
+                                <p:menuitem value="Etapas" url="etapa.xhtml" />
+                                <p:menuitem value="Cronograma" url="Cronograma.xhtml"/>
+                            </p:submenu>
+
+                            <p:submenu label="Mensagens">
+                                <p:menuitem value="Enviar"  url="msg.xhtml"/>
+                                <p:menuitem value="Recebidas"  url="msgRecebidas.xhtml"/>
+                            </p:submenu>
+
+                            <p:submenu label="Avaliações">
+                                <p:menuitem  value="Avaliação Banca" ajax="false" url="avaliacao.xhtml" icon="ui-icon ui-icon-check"/>
+                            </p:submenu>
+
+                            <p:submenu label="Biblioteca">
+                                <p:menuitem value="CAPES" ajax="false" url="capes.xhtml" icon="ui-icon ui-icon-clipboard"/>
+                                <p:menuitem value="Fontes de pesquisa" ajax="false" url="fPesquisas.xhtml" icon="ui-icon ui-icon-clipboard"/>
+                                <p:menuitem value="2016-2017" ajax="false" url="adeselvolver.xhtml" icon="ui-icon ui-icon-clipboard"/>
+                                <p:menuitem value="2013-2015" ajax="false" url="adeselvolver.xhtml" icon="ui-icon ui-icon-clipboard"/>
+                                <p:menuitem value="2010-2012" ajax="false" url="adeselvolver.xhtml" icon="ui-icon ui-icon-clipboard"/>
+                            </p:submenu>
+
+
+                            <p:submenu label="Configurações">
+                                <p:menuitem value="Tempo" ajax="false" icon="ui-icon ui-icon-play"/>
+                                <p:menuitem value="Editar perfil" ajax="false" url="perfil.xhtml" icon="ui-icon ui-icon-person"/>
+                                <p:menuitem value="Avisos" ajax="false" url="avisos.xhtml" icon="ui-icon ui-icon-alert"/>
+                            </p:submenu>
+
+
+                        </p:menu>
+
+                    </h:form>
+                </ui:insert>
+            </div>
+
+            <!--CONTEUDO ==============================================================================-->
+            <div id="content">
+                <ui:insert name="content">
+                    <h:form id="form" rendered="#{atenticacaoBean.usuarioLogado.cpf != null}">           
+                        <p:growl id="msgs" showDetail="true" />
+
+                        <h3 style="margin-top:2px">Bem Vindo ao Sistema de Gerenciamento de TCC's</h3>
+                        <p:accordionPanel>
+                            <p:tab title="Sobre o TCC">
+                                <h:panelGrid columns="2" cellpadding="10">
+                                    <p>O TCC exige dedicação e trabalho contínuos, o tempo de dedicação necessário é normalmente superior ao das demais disciplinas, pois escrever é trabalhoso. O tempo é suficiente, mas é justo, portanto não percam tempo.</p>
+                                    <p>O material incluído na plataforma está disponível nos "Cadernos Didáticos" da disciplina, que contém: </p>
+
+                                    <p>Guia do TCC: inclui as informações necessárias para o TCC, cronograma, etapas de desenvolvimento do trabalho (essas etapas valem pontos na nota final, portanto não percam as datas), seleção de temas, escrita do trabalho, entrega do mesmo, dinâmica de construção, principais dúvidas... Portanto, leiam atentamente as informações contidas nele.</p>
+                                    <ul type="disc">
+                                        <li>Modelo para MSWord: neste arquivo estão incluídos todos os formatos para a elaboração do trabalho.</li>
+                                        <li>Modelo para OpenDocument: é uma cópia do anterior, mas no formato OpenOffice.</li>
+                                        <li>Tutorial para o acesso ao portal da CAPES: para busca de referências para embasar os trabalhos.</li>
+                                    </ul>
+                                    <p>Não demorem nos passos iniciais, pois o tempo é suficiente, mas justo para a conclusão do trabalho. </p>
+                                </h:panelGrid>
+                            </p:tab>
+
+                            <p:tab title="Manuais" disabled="false">
+                                <h3 style="margin-top:2px">Clique no link desejado para abrir o manual</h3>
+                                <h:panelGrid columns="1" cellpadding="10">
+                                    <p:link href="manuais/manual_coodenador.html" value="Manual do Coordenador" target="_blank" style="font-family:'Share Tech'; font-size: 16px"/> 
+                                    <p:link href="manuais/manual_orientador.html" value="Manual do Orientador" target="_blank" style="font-family:'Share Tech'; font-size: 16px"/> 
+                                    <p:link href="manuais/manual_aluno.html" value="Manual do Aluno"  target="_blank" style="font-family:'Share Tech'; font-size: 16px"/> 
+                                    <p:link href="manuais/manual _avaliador.html" value="Manual do Avaliador" target="_blank" style="font-family:'Share Tech'; font-size: 16px"/> 
+                                    <p:link href="https://graduacao.cederj.edu.br/ava/pluginfile.php/9937/mod_folder/content/0/Guia_do_TCC.pdf?forcedownload=1" value="Guia do TCC" target="_blank" style="font-family:'Share Tech'; font-size: 16px"/> 
+                                </h:panelGrid>
+                            </p:tab>
+
+                            <p:tab title="Perguntas Frequentes" disabled="false">
+
+                                <b>1- Como vai ser feita a orientação?</b>
+                                <p>
+                                    <b>R:</b> A orientação pode ser feita toda utilizando as ferramentas aqui do sistema e também, caso haja necessidade, através de e-mails pessoais ou através de softwares que possuem videoconferência.
+                                </p> <hr></hr>
+                            
+
+                                <b>2- Posso fazer meu TCC em dupla?</b>
+                                <p>
+                                    <b>R:</b> Sim, você pode fazer seu TCC com mais um aluno.
+                                </p>
+                                <hr/>
+
+                                <b>3- O que acontece se não entregar meu trabalho no prazo correto?</b>
+                                <p>
+                                    <b>R:</b> Caso alguma etapa não seja cumprida dentro do prazo, ficará sem os pontos referentes à aquela etapa, ou, caso não entregue no prazo final será reprovado na disciplina.
+                                </p>
+                                <hr/>
+
+                                <b>4- O que acontece se não entrar em contato com meu orientador?</b>
+                                <p>
+                                    <b>R:</b> Caso não esteja em contato frequente com seu orientador, pode ser considerado desistente e desvinculado do orientador, o certo é estar sempre em contato.
+                                </p>
+                                <hr/>
+
+                                <b>5- Devo entregar uma versão impressa do trabalho?</b>
+                                <p>
+                                    <b>R:</b> Depende do seu curso, entre em contato com seu orientador.
+                                </p>
+                                <hr/>
+
+                                <b>6- Devo apresentar meu trabalho?</b>
+                                <p>
+                                    <b>R:</b> Depende do seu curso, entre em contato com seu orientador.
+                                </p>
+                                <hr/>
+
+                                <b>7- E sobre o plágio?</b>
+                                <p>
+                                    <b>R:</b> O plágio é inaceitável, e sua utilização terá as devidas punições de acordo com as regras da universidade vinculada ao seu curso.
+                                </p>
+                                
+                            </p:tab>
+
+                        </p:accordionPanel>
+                    </h:form>
+
+                </ui:insert>
+            </div>
+
+            <!--RODAPÉ ======================================================================================-->
+            <footer>
+                <div class="footer" position="south">
+                    <ui:insert name="footer">
+                        <center>
+                            <p> Trabalho de Conclusão de Curso</p>
+                            <p> Por: Deyvison Jose de Paula &cup; Maurílio Costa Bastos</p>
+                            <p> CEDERJ (Itaperuna) - UFF - SEM. 01-2018</p>
+                        </center>
+                    </ui:insert>
+                </div>
+            </footer>
+
+        </div>
+    </h:body>
+
+</html>
+

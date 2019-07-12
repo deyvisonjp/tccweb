@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition template="principal.xhtml">
+
+        <ui:define name="content">
+            <h4> <i> Fontes de Pesquisa </i> <hr/> </h4>
+
+
+            <p:growl id="growl" showDetail="true" />
+            <center>
+                <h4>Abaixo links com conteúdos de diversas areas para auxílio em suas pesquisas.</h4>
+                <h:panelGrid columns="3" cellspacing="40px" cellpadding="10px" style="font-family: 'Play', sans-serif; font-size:18px">
+                    <p:link href="https://portalrevistas.ucb.br/" target="_blank">Portal Revistas UCB</p:link>
+                    <p:link href="https://revistas.pucsp.br/" target="_blank">Revistas PUCSP</p:link>
+                    <p:link href="http://www.e-publicacoes.uerj.br/" target="_blank" >e-Publicações UERJ</p:link>
+                    <p:link href="https://fael.edu.br/biblioteca/revistas-eletronicas/" target="_blank">Revistas Eletrônicas FaelEdu </p:link>
+                    <p:link href="http://www.ojs.ufpi.br/" target="_blank">OJS UFPI</p:link>
+                    <p:link href="http://revistaseletronicas.pucrs.br/ojs/" target="_blank"> Revistas Eletrônicas PUCRS </p:link>
+                    <p:link href="http://www.dominiopublico.gov.br/pesquisa/PesquisaObraForm.jsp" target="_blank"> Domínio Público </p:link>
+                </h:panelGrid>
+                <br/>
+            </center>
+
+        </ui:define>
+    </ui:composition>
+
+</html>
+

@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="principal.xhtml">
+
+        <ui:define name="metadata">
+            <f:metadata>
+                <f:event listener="#{mensagemBean.carregar}" type="preRenderView" />
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="content">
+
+            <h4> <i> Mensagens </i> <hr/> </h4>
+            <!-- http://www.guj.com.br/t/chat-primefaces/198677/9 -->
+            <h:form id="frmMensagem">   
+
+                <p:growl id="growl" showDetail="true" />
+
+                <h:panelGrid id="pnlMensagem" columns="1" cellspacing="3px"  columnClasses="colunaEsquerda">
+
+                    <h:outputLabel value="Destinatário(s):"/>
+                    <p:selectOneMenu value="#{mensagemBean.mensagemCad.destinatario}" 
+                                     converter="usuarioConverter"
+                                     filter="true" filterMatchMode="startsWith">
+                        <f:selectItem  itemLabel="Selecione o(s) destinátario(s)"/>
+                        <f:selectItems id="user" value="#{mensagemBean.listaUsuario}" var="user"
+                                       itemValue="#{user}" itemLabel="#{user.nome} - #{user.nivelUsuario}"/>
+                    </p:selectOneMenu>
+
+                    <h:outputLabel value="Assunto:"/>
+                    <p:inputTextarea value="#{mensagemBean.mensagemCad.assunto}"  onblur="#{mensagemBean.mensagemCad.setUsuario_remetente(atenticacaoBean.usuarioLogado)}" rows="1" cols="114" /> 
+
+                    <h:outputLabel value="Escreva sua mensagem:"/>
+                    <p:editor id="editor" widgetVar="editorWidget" value="#{mensagemBean.mensagemCad.texto_mensagem}" width="800" />
+
+                    <p:fileUpload label="Carregar Arquivo" value="#{mensagemBean.mensagemCad.arquivo}" mode="simple" skinSimple="true"/>
+
+                </h:panelGrid>
+
+                <br/>
+
+                <h:panelGrid columns="2">
+                    <p:commandButton value="Enviar"  action="#{mensagemBean.salvar()}"
+                                     update="frmMensagem: growl" icon="fa-mail-forward"/>
+                    <p:commandButton value="Cancelar"/>
+                </h:panelGrid>
+
+
+            </h:form>
+
+        </ui:define>    
+
+    </ui:composition>
+
+</html>
+

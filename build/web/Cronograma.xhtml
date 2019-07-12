@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="principal.xhtml">
+
+        <ui:define name="metadata">
+            <f:metadata>
+                <f:event listener="#{cronogramaBean.carregar()}" type="preRenderView"/>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="content">
+
+            <h4> <i> Cronograma </i> <hr/> </h4>
+
+            <h:form id="frmCronograma">
+
+                <p:growl id="growl" showDetail="true" />
+
+                <center>
+                    <p:panelGrid id="pnlCronograma" columns="2" style="font-size: 15px; font-family: 'Share Tech', sans-serif; ">
+
+                        <h:outputText value="Etapa 1:"/>
+                        <p:outputLabel value="#{cronogramaBean.buscarCronograma().lim_etapa1}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:outputLabel>
+
+                        <h:outputText value="Etapa 2:"/>
+                        <p:outputLabel value="#{cronogramaBean.buscarCronograma().lim_etapa2}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:outputLabel>
+
+                        <h:outputText value="Etapa 3:"/>
+                        <p:outputLabel value="#{cronogramaBean.buscarCronograma().lim_etapa3}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:outputLabel>
+
+                        <h:outputText value="Etapa 4:"/>
+                        <p:outputLabel value="#{cronogramaBean.buscarCronograma().lim_etapa4}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:outputLabel>
+
+                        <h:outputText value="Etapa 5:"/>
+                        <p:outputLabel value="#{cronogramaBean.buscarCronograma().lim_etapa5}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:outputLabel>
+
+                        <h:outputText value="Etapa 6:"/>
+                        <p:outputLabel value="#{cronogramaBean.buscarCronograma().lim_etapa6}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:outputLabel>
+
+                    </p:panelGrid>
+
+                    <br/>
+
+                    <h:panelGrid columns="1" style="padding-left: 15px" >
+
+                        <p:link href="sobreEtapas/sobreEtapas.html" value=" Sobre Etapas" target="_blank" style="font-family:'Share Tech'; font-size: 16px"/> 
+
+                    </h:panelGrid>
+
+                </center>
+
+            </h:form>
+
+        </ui:define>
+    </ui:composition>
+
+</html>

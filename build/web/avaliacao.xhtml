@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="principal.xhtml">
+
+        <ui:define name="metadata">
+            <f:metadata>
+                <f:event listener="#{avaliaBean.carregar}" type="preRenderView"/>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="content">
+
+            <h4> <i> Avaliação da Banca </i> <hr/> </h4>
+
+            <h:form id="frmAvaliacao">
+
+                <p:growl id="growl" showDetail="true" />
+
+                <h:panelGrid id="pnlAvaliacao" columns="2" cellspacing="5px" cellpadding="5px"  columnClasses="colunaEsquerda,colunaDireita" >
+
+                    <h:outputLabel value="Aluno(s)"/>
+                    <p:selectOneMenu value="#{avaliaBean.avaliaCad.aluno}" converter="alunoConverter"
+                                     filter="true" filterMatchMode="startsWith">
+                        <f:selectItem  itemLabel="Selecione o(s) aluno(s)"/>
+                        <f:selectItems value="#{avaliaBean.listaAluno}" var="aluno"
+                                       itemValue="#{aluno}" itemLabel="#{aluno.nome} - TCC: #{aluno.tcc.tema}"/>
+                    </p:selectOneMenu>
+
+                    <h:outputText value="Nota Etapa [1-4]:" />
+                    <p:inputText size="15" disabled="true"
+                                 id="notaEtapas" placeholder="Notas das Etapas"/>
+
+
+                    <p:separator /><p:separator />
+                    <h:outputText value="Nota Banca:" />
+                    <input class="txt" disabled="true" size="10px" value="#{avaliaBean.avaliaCad.nota}" placeholder="Média da Notas"  id="result" type="text"/>
+
+
+                    <h:outputText value="Orientador: " />
+                    <p:selectOneMenu value="#{avaliaBean.avaliaCad.orientador}" converter="orientadorConverter"
+                                     filter="true" filterMatchMode="startsWith">
+                        <f:selectItem  itemLabel="Selecione o orientador"/>
+                        <f:selectItems value="#{avaliaBean.listaOrientador}" var="orientador"
+                                       itemValue="#{orientador}" itemLabel="#{orientador.nome}"/>
+                    </p:selectOneMenu>                    
+
+                    <h:outputText value="&nbsp;&nbsp;&nbsp;&nbsp;Nota: " />
+                    <input class="txt" id="txtNotaOri" size="10px" type="text" value="" onfocus="calcular()"/>
+
+                    <h:outputLabel value="Avaliador: "/>
+                    <p:selectOneMenu value="#{avaliaBean.avaliaCad.avaliador}" converter="avaliadorConverter"
+                                     filter="true" filterMatchMode="startsWith">
+                        <f:selectItem itemValue="" itemLabel="Selecione o avaliador"/>
+                        <f:selectItems value="#{avaliaBean.listaAvaliador}" var="avaliador"
+                                       itemValue="#{avaliador}" itemLabel="#{avaliador.nome}"/>
+                    </p:selectOneMenu>
+
+                    <h:outputText value="&nbsp;&nbsp;&nbsp;&nbsp;Nota: " />
+                    <input class="txt" id="txtNotaAva" type="text"  size="10px" value="" onblur="calcular()"/>
+
+                    <p:separator /><p:separator/>
+
+
+                    <h:outputText value="Nota Etapa 6: " />
+                    <p:inputMask mask="0.9" size="15" id="txtNotaE6" placeholder="Max 0.9 pts"/>
+
+                    <h:outputText value="Observações: " />
+                    <p:inputTextarea cols="55" id="txtObservacao" value="#{avaliaBean.avaliaCad.observacao}"/>
+
+
+                </h:panelGrid>
+
+                <img src="resources/img/new_avaliador.png"  style="position:absolute ;width: 230px; margin-top: -300px; margin-left: 600px"/>
+                <br/>
+                <h:panelGrid columns="2" cellpadding=" 30px">
+
+                    <p:commandButton value="Confirmar"
+                                     actionListener="#{avaliaBean.salvar()}"
+                                     update="growl: frmAvaliacao" icon="ui-icon-disk" />
+
+                   
+                    <p:link href="impressao/impressao.html" value="Gerar Ata" target="_blank" style="font-family:'Share Tech'; font-size: 16px"/> 
+                
+
+                </h:panelGrid>
+            </h:form>
+
+        </ui:define>
+    </ui:composition>
+
+</html>
+
